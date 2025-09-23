@@ -9,3 +9,4 @@ class StartState(StatesGroup):
 
 class SettingsState(StatesGroup):
     home = State()
+    notification_days_setting = State()

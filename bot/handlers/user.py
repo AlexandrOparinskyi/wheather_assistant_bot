@@ -4,7 +4,10 @@ from aiogram.types import Message
 from aiogram_dialog import DialogManager
 
 from bot.states import StartState, SettingsState
-from bot.utils import get_user_by_id, create_user
+from bot.utils import (get_user_by_id,
+                       create_user,
+                       create_user_setting,
+                       create_user_schedule)
 
 user_router = Router()
 
@@ -19,6 +22,8 @@ async def command_start(message: Message,
                           message.from_user.first_name,
                           message.from_user.last_name,
                           message.from_user.username)
+        await create_user_setting(message.from_user.id)
+        await create_user_schedule(message.from_user.id)
 
         await dialog_manager.start(state=StartState.start)
 
