@@ -17,8 +17,7 @@ async def get_weekdays_text(user: User) -> str:
         hours = day.notification_time.hour
         minutes = day.notification_time.minute
         time_str = f"{hours}:{minutes:02d}"
-        status = "🔔" if day.is_enabled else "🔕"
-        text += (f"• {day.day_of_week.emoji} {day.day_of_week.display_name}: "
-                 f"{time_str} | {status}\n")
+        text += (f"• {day.status_icon} {day.day_of_week.display_name}: "
+                 f"{time_str}\n")
 
     return text

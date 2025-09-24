@@ -18,7 +18,10 @@ class User(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime,
                                                  default=func.now())
 
-    user_settings = relationship("UserSetting", back_populates="user")
+    user_settings = relationship("UserSetting",
+                                 back_populates="user",
+                                 uselist=False,
+                                 lazy="joined")
     user_schedules = relationship("UserSchedule",
                                   back_populates="user",
                                   lazy="selectin")

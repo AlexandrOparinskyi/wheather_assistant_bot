@@ -9,4 +9,6 @@ class StartState(StatesGroup):
 
 class SettingsState(StatesGroup):
     home = State()
-    notification_days_setting = State()
+    notification_setting = State()
+    time_setting = State()
+    location_setting = State()

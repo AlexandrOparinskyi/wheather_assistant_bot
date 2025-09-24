@@ -16,4 +16,31 @@ async def getter_setting_home(i18n: TranslatorHub,
     return {"home_message": i18n.settings.home.text(username=user.first_name,
                                                     weekdays=weekdays),
             "notification_days_setting": notification_days_setting,
-            "time_setting": i18n.setting.time.button()}
+            "time_setting": i18n.setting.time.button(),
+            "location_setting": i18n.setting.location.button()}
+
+
+async def getter_notification_setting(i18n: TranslatorHub,
+                                      event_from_user: User,
+                                      **kwargs) -> Dict[str, str]:
+    user = await get_user_by_id(event_from_user.id)
+    day_buttons = list(sorted(user.user_schedules,
+                              key=lambda item: item.day_of_week.value))
+
+    return {"setting_notification_text": i18n.settings.notification.text(),
+            "buttons": day_buttons,
+            "enable_weekdays_button": i18n.enable.weekdays.button(),
+            "disable_weekdays_button": i18n.disable.weekdays.button(),
+            "back_button": i18n.back.button()}
+
+
+async def getter_location_setting(i18n: TranslatorHub,
+                                  event_from_user: User,
+                                  **kwargs) -> Dict[str, str]:
+    user = await get_user_by_id(event_from_user.id)
+    setting_location_text = i18n.setting.location.text(
+        current_city=user.user_settings.city
+    )
+
+    return {"setting_location_text": setting_location_text,
+            "back_button": i18n.back.button()}

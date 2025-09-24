@@ -1,7 +1,7 @@
 import enum
 from datetime import time
 
-from sqlalchemy import ForeignKey, Enum, Time
+from sqlalchemy import ForeignKey, Enum, Time, Constraint, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
@@ -42,22 +42,12 @@ class Weekday(enum.Enum):
         }
         return names.get(self, "Ошибка ❌")
 
-    @property
-    def emoji(self) -> str:
-        emojis = {
-            Weekday.MONDAY: "😫",
-            Weekday.TUESDAY: "🥱",
-            Weekday.WEDNESDAY: "😔",
-            Weekday.THURSDAY: "🥹",
-            Weekday.FRIDAY: "🥳",
-            Weekday.SATURDAY: "🤤",
-            Weekday.SUNDAY: "😴"
-        }
-        return emojis.get(self, "📅")
-
 
 class UserSchedule(Base):
     __tablename__ = 'user_schedules'
+    __table_args__ = (
+        UniqueConstraint("user_id", "day_of_week", name="unique_user_day"),
+    )
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id",
                                                     ondelete="CASCADE",))
@@ -71,4 +61,4 @@ class UserSchedule(Base):
 
     @property
     def status_icon(self) -> str:
-        return "✅" if self.is_enabled else "❌"
+        return "🔔" if self.is_enabled else "🔕"

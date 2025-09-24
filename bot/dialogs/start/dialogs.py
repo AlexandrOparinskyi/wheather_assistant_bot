@@ -7,7 +7,8 @@ from .getters import (getter_start,
                       getter_info_setting,
                       getter_skip_settings)
 from .handlers import (continue_button_to_view_info_setting,
-                       start_skip_button)
+                       start_skip_button,
+                       start_setting_button)
 
 start_dialog = Dialog(
     Window(
@@ -22,7 +23,7 @@ start_dialog = Dialog(
         Format("{info_message}"),
         Button(Format("{setting_button}"),
                id="setting_button",
-               on_click=None),
+               on_click=start_setting_button),
         Button(Format("{skip_button}"),
                id="skip_button",
                on_click=start_skip_button),
