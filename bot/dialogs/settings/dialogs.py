@@ -1,4 +1,6 @@
+from aiogram.enums import ContentType
 from aiogram_dialog import Dialog, Window
+from aiogram_dialog.widgets.input import MessageInput
 from aiogram_dialog.widgets.kbd import Button, Group, Select, Row
 from aiogram_dialog.widgets.text import Format
 
@@ -12,7 +14,9 @@ from .handlers import (notification_days_setting,
                        disable_weekdays_button,
                        back_button_to_home,
                        time_setting,
-                       location_setting)
+                       location_setting,
+                       send_location,
+                       error_send_location)
 
 settings_dialog = Dialog(
     Window(
@@ -52,6 +56,10 @@ settings_dialog = Dialog(
     ),
     Window(
         Format("{setting_location_text}"),
+        MessageInput(func=send_location,
+                     content_types=ContentType.LOCATION),
+        MessageInput(func=error_send_location,
+                     content_types=ContentType.ANY),
         Button(Format("{back_button}"),
                id="back_button",
                on_click=back_button_to_home),

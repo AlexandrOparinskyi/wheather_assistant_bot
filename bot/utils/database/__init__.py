@@ -1,5 +1,5 @@
-from .user import get_user_by_id, create_user
-from .user_setting import create_user_setting
+from .user import *
+from .user_setting import *
 from .user_schedule import *
 
 __all__ = ["get_user_by_id",
@@ -8,4 +8,5 @@ __all__ = ["get_user_by_id",
            "create_user_schedule",
            "toggle_notification_status",
            "enable_weekdays",
-           "disable_weekdays"]
+           "disable_weekdays",
+           "toggle_user_city"]

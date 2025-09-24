@@ -19,9 +19,17 @@ class Database:
 
 
 @dataclass
+class Redis:
+    host: str
+    port: int
+    db: int
+
+
+@dataclass
 class Config:
     tg_bot: TgBot
     database: Database
+    redis: Redis
 
 
 def load_config(path: Optional[str] = None) -> Config:
@@ -37,5 +45,10 @@ def load_config(path: Optional[str] = None) -> Config:
             db_name=env("DB_NAME"),
             db_user=env("DB_USER"),
             db_pass=env("DB_PASS"),
+        ),
+        redis=Redis(
+            host=env("REDIS_HOST"),
+            port=env.int("REDIS_PORT"),
+            db=env.int("REDIS_DB"),
         )
     )
