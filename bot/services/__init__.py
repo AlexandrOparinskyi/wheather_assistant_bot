@@ -2,13 +2,6 @@ from .get_weather import get_weather_data
 from .get_clothing import generate_clothing_recommendations
 from .recomendation_message import format_recommendation_message
 
-__all__ = [
-    'get_weather_data',
-    'generate_clothing_recommendations',
-    'format_recommendation_message',
-    'get_weather_recommendation_message'
-]
-
 
 async def get_weather_recommendation_message(city: str) -> str:
     """
@@ -32,3 +25,11 @@ async def get_weather_recommendation_message(city: str) -> str:
 
     # Форматируем и возвращаем готовое сообщение
     return format_recommendation_message(weather_data, recommendations)
+
+
+__all__ = [
+    'get_weather_data',
+    'generate_clothing_recommendations',
+    'format_recommendation_message',
+    'get_weather_recommendation_message'
+]

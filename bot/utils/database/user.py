@@ -1,8 +1,13 @@
-from typing import Optional
+from typing import Optional, List
 
 from sqlalchemy import insert, select
 
 from database import get_async_session, User
+
+
+async def get_all_users() -> List[User]:
+    async with get_async_session() as session:
+        return await session.scalars(select(User))
 
 
 async def get_user_by_id(user_id: int) -> Optional[User]:

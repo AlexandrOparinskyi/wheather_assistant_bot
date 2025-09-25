@@ -11,7 +11,7 @@ from config import load_config, Config
 from bot import bot
 
 logging.basicConfig(
-        level=logging.DEBUG,
+        level=logging.INFO,
         format='[%(asctime)s] #%(levelname)-8s %(filename)s:'
                '%(lineno)d - %(name)s - %(message)s'
     )

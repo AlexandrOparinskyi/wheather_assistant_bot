@@ -1,5 +1,4 @@
 from datetime import time
-from typing import List, Optional
 
 from sqlalchemy import insert, select, update
 

@@ -8,7 +8,8 @@ from bot.utils import (get_user_by_id,
                        create_user,
                        create_user_setting,
                        create_user_schedule)
-from services import get_weather_recommendation_message
+
+from ..services import get_weather_recommendation_message
 
 user_router = Router()
 
@@ -40,7 +41,7 @@ async def command_settings(message: Message,
     await dialog_manager.start(state=SettingsState.home)
 
 
-@user_router.message(Command(commands="get_weather"))
+@user_router.message(Command(commands="get_recommendations"))
 async def get_weather(message: Message):
     user = await get_user_by_id(message.from_user.id)
     text = await get_weather_recommendation_message(user.user_settings.city)
