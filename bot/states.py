@@ -11,4 +11,6 @@ class SettingsState(StatesGroup):
     home = State()
     notification_setting = State()
     time_setting = State()
+    time_day_setting = State()
+    time_full_setting = State()
     location_setting = State()

@@ -1,5 +1,3 @@
-from time import timezone
-
 from aiogram.client.session import aiohttp
 from aiogram.types import CallbackQuery, Message
 from aiogram_dialog import DialogManager, ShowMode
@@ -8,7 +6,8 @@ from aiogram_dialog.widgets.kbd import Select, Button
 
 from bot.states import SettingsState
 from bot.utils import toggle_notification_status, enable_weekdays, \
-    disable_weekdays, toggle_user_city
+    disable_weekdays, toggle_user_city, toggle_time_notification, \
+    toggle_full_time_notification
 
 
 async def back_button_to_home(callback: CallbackQuery,
@@ -56,8 +55,8 @@ async def disable_weekdays_button(callback: CallbackQuery,
 
 
 async def send_location(message: Message,
-                          widget: MessageInput,
-                          dialog_manager: DialogManager):
+                        widget: MessageInput,
+                        dialog_manager: DialogManager):
     lat, lon = message.location.latitude, message.location.longitude
     url = "https://nominatim.openstreetmap.org/reverse"
     params = {
@@ -87,3 +86,66 @@ async def error_send_location(message: Message,
     await message.answer(
         text=i18n.invalid.location.message.text()
     )
+
+
+async def select_day_setting(callback: CallbackQuery,
+                             widget: Select,
+                             dialog_manager: DialogManager,
+                             item_id: str):
+    dialog_manager.dialog_data.update(num_day=item_id)
+
+    await dialog_manager.switch_to(state=SettingsState.time_day_setting)
+
+
+async def select_full_time(callback: CallbackQuery,
+                           button: Button,
+                           dialog_manager: DialogManager):
+    await dialog_manager.switch_to(state=SettingsState.time_full_setting)
+
+
+async def back_button_to_day_time_setting(callback: CallbackQuery,
+                                          button: Button,
+                                          dialog_manager: DialogManager):
+    await dialog_manager.switch_to(state=SettingsState.time_setting)
+
+
+async def select_time_setting(callback: CallbackQuery,
+                              widget: Select,
+                              dialog_manager: DialogManager,
+                              item_id: str):
+    num_day = int(dialog_manager.dialog_data.get("num_day"))
+    await toggle_time_notification(callback.from_user.id,
+                                   num_day,
+                                   item_id)
+
+    await dialog_manager.switch_to(state=SettingsState.time_setting)
+
+
+async def toggle_full_time(callback: CallbackQuery,
+                           widget: MessageInput,
+                           dialog_manager: DialogManager,
+                           item_id: str):
+    await toggle_full_time_notification(callback.from_user.id,
+                                        item_id)
+
+    await dialog_manager.switch_to(state=SettingsState.time_setting)
+
+
+async def enter_time_setting(message: Message,
+                             widget: MessageInput,
+                             dialog_manager: DialogManager):
+    num_day = int(dialog_manager.dialog_data.get("num_day"))
+    await toggle_time_notification(message.from_user.id,
+                                   num_day,
+                                   message.text)
+
+    await dialog_manager.switch_to(state=SettingsState.time_setting)
+
+
+async def enter_full_time_setting(message: Message,
+                                  widget: MessageInput,
+                                  dialog_manager: DialogManager):
+    await toggle_full_time_notification(message.from_user.id,
+                                        message.text)
+
+    await dialog_manager.switch_to(state=SettingsState.time_setting)

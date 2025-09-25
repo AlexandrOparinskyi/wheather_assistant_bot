@@ -9,4 +9,6 @@ __all__ = ["get_user_by_id",
            "toggle_notification_status",
            "enable_weekdays",
            "disable_weekdays",
-           "toggle_user_city"]
+           "toggle_user_city",
+           "toggle_time_notification",
+           "toggle_full_time_notification"]

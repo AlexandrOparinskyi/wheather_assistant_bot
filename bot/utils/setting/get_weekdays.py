@@ -1,5 +1,4 @@
 from database import User
-from ..database import get_user_by_id
 
 
 async def get_weekdays_text(user: User) -> str:

@@ -1,6 +1,7 @@
+from datetime import time
 from typing import List, Optional
 
-from sqlalchemy import insert, select
+from sqlalchemy import insert, select, update
 
 from database import get_async_session, UserSchedule, Weekday
 
@@ -30,6 +31,47 @@ async def toggle_notification_status(user_id: int,
         if day:
             day.is_enabled = not day.is_enabled
             await session.commit()
+
+
+async def toggle_time_notification(user_id: int,
+                                   day_of_week: int,
+                                   n_time: str) -> None:
+    async with get_async_session() as session:
+        try:
+            hour, minute = n_time.split(':')
+        except ValueError:
+            hour = n_time
+            minute = 0
+        weekday_enum = Weekday(day_of_week)
+        notification_time = time(int(hour), int(minute))
+
+        await session.execute(update(UserSchedule).where(
+            UserSchedule.user_id == user_id,
+            UserSchedule.day_of_week == weekday_enum
+        ).values(
+            notification_time=notification_time
+        ))
+        await session.commit()
+
+
+async def toggle_full_time_notification(user_id: int,
+                                        n_time: str) -> None:
+    async with get_async_session() as session:
+        try:
+            hour, minute = n_time.split(':')
+        except ValueError:
+            hour = n_time
+            minute = 0
+        notification_time = time(int(hour), int(minute))
+
+        schedules = await session.scalars(select(UserSchedule).where(
+            UserSchedule.user_id == user_id
+        ))
+
+        for schedule in schedules:
+            schedule.notification_time = notification_time
+
+        await session.commit()
 
 
 async def enable_weekdays(user_id: int) -> None:

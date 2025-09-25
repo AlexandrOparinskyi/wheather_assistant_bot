@@ -6,7 +6,7 @@ async def get_weather_openweather():
     url = "http://api.weatherapi.com/v1/forecast.json"
     params = {
         'key': 'b37226ed91f5447192a185002252409',
-        'q': "Москва",
+        'q': "Сурмино",
         'lang': 'ru',
         'days': 1
     }
