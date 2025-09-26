@@ -122,7 +122,7 @@ def _add_base_recommendations(recommendations: Dict[str, List],
         recommendations['important_tips'].append(
             '🌤️ Свежо! Идеально для многослойной одежды')
 
-    elif 11 <= avg_temp <= 15:
+    elif 10 < avg_temp <= 15:
         recommendations['headwear'].append('кепка или панама')
         recommendations['upper_body'].extend(
             ['футболка с легкой кофтой', 'рубашка', 'толстовка', 'ветровка'])
@@ -131,7 +131,7 @@ def _add_base_recommendations(recommendations: Dict[str, List],
         recommendations['important_tips'].append(
             '😊 Комфортно! Легкая кофта может пригодиться')
 
-    elif 16 <= avg_temp <= 19:
+    elif 15 < avg_temp <= 19:
         recommendations['headwear'].append('кепка или бейсболка')
         recommendations['upper_body'].extend(
             ['футболка', 'рубашка с длинным рукавом', 'легкая кофта'])
@@ -142,7 +142,7 @@ def _add_base_recommendations(recommendations: Dict[str, List],
         recommendations['important_tips'].append(
             '🌞 Тепло! Идеальная погода для легкой одежды')
 
-    elif 20 <= avg_temp <= 24:
+    elif 19 < avg_temp <= 24:
         recommendations['headwear'].append('панама или шляпа')
         recommendations['upper_body'].extend(
             ['футболка', 'майка', 'рубашка с коротким рукавом', 'топ'])
@@ -153,7 +153,7 @@ def _add_base_recommendations(recommendations: Dict[str, List],
         recommendations['important_tips'].append(
             '☀️ Жарковато! Легкая и дышащая одежда')
 
-    elif 25 <= avg_temp <= 29:
+    elif 24 < avg_temp <= 29:
         recommendations['headwear'].extend(
             ['панама', 'шляпа с широкими полями', 'бандана'])
         recommendations['upper_body'].extend(
